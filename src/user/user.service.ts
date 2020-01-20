@@ -1,56 +1,45 @@
 import { Injectable } from '@nestjs/common';
 import { UserModel } from 'tools/models/user.model';
-import { UserCreateDto } from 'tools/dtos/user.dto';
-
-const result: UserModel[] = [];
+import { UserCreateDto, UserUpdateDto } from 'tools/dtos/user.dto';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { AuditModel } from 'tools/models/audit.model';
 
 @Injectable()
 export class UserService {
-  getAllUsers(): UserModel[] {
-    if (result.length === 0) {
-      this.creatingMockUser({
-        birthDay: new Date(),
-        email: 'ahmetaydin@udemy.com.tr',
-        name: 'Ahmet',
-        surname: 'Aydın',
-        password: '123123',
-      });
-    }
-    return result;
+  constructor(
+    @InjectModel('User') private readonly userMongo: Model<UserModel>,
+  ) {}
+
+  async create(user: UserCreateDto): Promise<UserModel> {
+    const audit = new AuditModel();
+    audit.active = true;
+    audit.createdBy = 'Admin';
+    audit.createdDate = new Date();
+
+    const createdUser = new this.userMongo({ ...user, ...audit });
+
+    return await createdUser.save();
   }
 
-  getUserById(id): any {
-    const user = result.find(data => data.id == id);
-
-    if (!user) {
-      return 'user does not exist';
-    } else {
-      return user;
-    }
+  async findAll(): Promise<UserModel[]> {
+    return await this.userMongo.find().exec();
   }
 
-  createUser(body: UserCreateDto) {
-    const isExist = result.find(res => {
-      res.email === body.email;
-    });
-    if (isExist) {
-      return isExist;
-    } else {
-      this.creatingMockUser(body);
-      return result.slice(result.length - 1, result.length);
-    }
+  async findOne(id: string): Promise<UserModel> {
+    return await this.userMongo.find({ _id: id }).exec();
   }
 
-  private creatingMockUser(data: any) {
-    const user: UserModel = new UserModel();
-    user.birthDay = data.birthDay;
-    user.email = data.email;
-    user.name = data.name;
-    user.surname = data.surname;
-    user.password = data.password;
+  async delete(id: string): Promise<UserModel> {
+    return await this.userMongo.findByIdAndRemove({ _id: id }).exec();
+  }
 
-    user.id = (Math.floor(Math.random() * 60) + 1).toString();
+  async update(id: string, user: UserUpdateDto): Promise<UserModel> {
+    let newModel = this.userMongo.findOne({ _id: id }).exec();
+    newModel = { ...newModel, ...user };
 
-    result.push(user);
+    return await this.userMongo
+      .findByIdAndUpdate(id, newModel, { new: true })
+      .exec();
   }
 }
