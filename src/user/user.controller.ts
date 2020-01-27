@@ -6,6 +6,7 @@ import {
   Param,
   Put,
   Delete,
+  UseFilters,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserCreateDto, UserUpdateDto } from 'tools/dtos/user.dto';
