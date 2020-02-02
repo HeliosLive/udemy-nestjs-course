@@ -15,6 +15,7 @@ import { GroupModule } from './group/group.module';
 import { ActivityModule } from './activity/activity.module';
 import { ProductModule } from './product/product.module';
 import { RoleModule } from './role/role.module';
+import { TotalModule } from './total/total.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { RoleModule } from './role/role.module';
     InventoryTypeModule,
     TicketTypeModule,
     LibsModule,
+    TotalModule,
     MongooseModule.forRoot(environment.mongoUrl),
   ],
   controllers: [AppController],
