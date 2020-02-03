@@ -1,6 +1,6 @@
 import { RoleModel } from 'tools/models/role.model';
 import { GroupModel } from 'tools/models/group.model';
-import { IsNotEmpty, Length, IsEmail, IsDate } from 'class-validator';
+import { IsNotEmpty, Length, IsEmail, IsDateString } from 'class-validator';
 
 export class UserCreateDto {
   @IsNotEmpty()
@@ -11,7 +11,7 @@ export class UserCreateDto {
   password: string;
   @IsEmail()
   email: string;
-  @IsDate()
+  @IsDateString()
   birthDay: Date;
 }
 
