@@ -16,6 +16,7 @@ import { ActivityModule } from './activity/activity.module';
 import { ProductModule } from './product/product.module';
 import { RoleModule } from './role/role.module';
 import { TotalModule } from './total/total.module';
+import { LoginModule } from './login/login.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { TotalModule } from './total/total.module';
     TicketTypeModule,
     LibsModule,
     TotalModule,
+    LoginModule,
     MongooseModule.forRoot(environment.mongoUrl),
   ],
   controllers: [AppController],
