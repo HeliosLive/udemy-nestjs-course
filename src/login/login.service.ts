@@ -4,6 +4,8 @@ import { UserLoginDto } from 'tools/dtos/user.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { UserService } from 'src/user/user.service';
+import environment from 'tools/environment/environment';
+import * as jwt from 'jsonwebtoken';
 
 @Injectable()
 export class LoginService {
@@ -33,7 +35,11 @@ export class LoginService {
           });
 
         if (checkPwd) {
-          return await { success: true, value: existUser };
+          const authJsonWebToken = jwt.sign(
+            { user: existUser },
+            environment.jwtText,
+          );
+          return await { success: true, value: authJsonWebToken };
         } else {
           return await {
             success: false,
