@@ -27,6 +27,7 @@
     "bcrypt": "^3.0.7",
     "class-transformer": "^0.2.3",
     "class-validator": "^0.11.0",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.8.9",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.0",
