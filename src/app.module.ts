@@ -1,4 +1,9 @@
-import { Module } from '@nestjs/common';
+import {
+  Module,
+  NestModule,
+  MiddlewareConsumer,
+  RequestMethod,
+} from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
@@ -17,6 +22,7 @@ import { ProductModule } from './product/product.module';
 import { RoleModule } from './role/role.module';
 import { TotalModule } from './total/total.module';
 import { LoginModule } from './login/login.module';
+import { TokenMiddleware } from 'libs/middlewares/token.middleware';
 
 @Module({
   imports: [
@@ -39,4 +45,10 @@ import { LoginModule } from './login/login.module';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(TokenMiddleware)
+      .forRoutes({ path: '*', method: RequestMethod.ALL });
+  }
+}
