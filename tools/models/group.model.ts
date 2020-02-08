@@ -3,7 +3,7 @@ import { AuditModel } from './audit.model';
 import { RoleModel } from './role.model';
 
 export class GroupModel {
-  id: string;
+  _id: string;
   name: string;
   description: string;
   audit: AuditModel;
