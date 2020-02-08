@@ -23,6 +23,8 @@ import { RoleModule } from './role/role.module';
 import { TotalModule } from './total/total.module';
 import { LoginModule } from './login/login.module';
 import { TokenMiddleware } from 'libs/middlewares/token.middleware';
+import { APP_GUARD } from '@nestjs/core';
+import { AuthGuard } from 'libs/guards/auth.guard';
 
 @Module({
   imports: [
@@ -43,7 +45,13 @@ import { TokenMiddleware } from 'libs/middlewares/token.middleware';
     MongooseModule.forRoot(environment.mongoUrl),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard,
+    },
+  ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
