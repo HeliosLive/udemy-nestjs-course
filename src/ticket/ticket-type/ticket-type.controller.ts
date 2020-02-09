@@ -10,7 +10,9 @@ import {
 import { TicketTypeService } from './ticket-type.service';
 import { TicketTypeModel } from 'tools/models/ticket-type.model';
 import { TicketTypeDto } from 'tools/dtos/ticket-type.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('ticket-type')
 @Controller('ticket-type')
 export class TicketTypeController {
   constructor(private readonly ticketTypeService: TicketTypeService) {}
