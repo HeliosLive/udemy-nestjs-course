@@ -8,6 +8,7 @@ import { UploadService } from './upload.service';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { extname } from 'path';
 import { diskStorage } from 'multer';
+import { ApiTags } from '@nestjs/swagger';
 
 const storageOptions = diskStorage({
   destinaton: './uploads',
@@ -16,6 +17,7 @@ const storageOptions = diskStorage({
   },
 });
 
+@ApiTags('upload')
 @Controller('upload')
 export class UploadController {
   constructor(private readonly uploadService: UploadService) {}
