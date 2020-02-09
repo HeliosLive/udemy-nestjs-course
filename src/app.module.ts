@@ -25,6 +25,8 @@ import { LoginModule } from './login/login.module';
 import { TokenMiddleware } from 'libs/middlewares/token.middleware';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from 'libs/guards/auth.guard';
+import { UploadModule } from './upload/upload.module';
+import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
   imports: [
@@ -42,6 +44,10 @@ import { AuthGuard } from 'libs/guards/auth.guard';
     LibsModule,
     TotalModule,
     LoginModule,
+    UploadModule,
+    MulterModule.register({
+      dest: './uploads',
+    }),
     MongooseModule.forRoot(environment.mongoUrl),
   ],
   controllers: [AppController],
