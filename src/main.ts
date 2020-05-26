@@ -10,6 +10,7 @@ async function bootstrap() {
   app.useGlobalFilters(new AllExceptionFilter(httpAdapter));
   app.setGlobalPrefix('api');
   app.useGlobalPipes(new ValidationPipe());
+  app.enableCors();
 
   const options = new DocumentBuilder()
     .setTitle('Udemy course API endpoints')
