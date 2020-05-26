@@ -13,7 +13,10 @@ export class TokenMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: Function) {
     const authJsonWebToken = req.headers.authorization;
 
-    if (req.baseUrl !== '/api/login' && req.baseUrl !== '/api/role') {
+    if (
+      req.baseUrl !== '/api/login' &&
+      req.baseUrl.slice(0, 9) !== '/api/role'
+    ) {
       if (!authJsonWebToken) {
         next();
         throw new HttpException('Jwt could not found!', HttpStatus.FORBIDDEN);
