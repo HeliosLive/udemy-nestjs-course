@@ -57,6 +57,18 @@ export class ResourceService<T extends any, C extends any, U extends any> {
           .skip(searchValue.size * (searchValue.page - 1))
           .sort([[`${searchValue.sortBy}`, searchValue.sort]])
           .exec();
+      } else {
+        const searchValue = await { ...this.generalSearchQuery };
+        const userRegex = new RegExp(searchValue.queryText, 'i');
+
+        return await this.mongoModel
+          .find({
+            [searchValue.searchBy]: userRegex,
+          })
+          .limit(Math.max(0, searchValue.size))
+          .skip(searchValue.size * (searchValue.page - 1))
+          .sort([[`${searchValue.sortBy}`, searchValue.sort]])
+          .exec();
       }
     }
   }
