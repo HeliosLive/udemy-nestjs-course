@@ -30,7 +30,7 @@
     "class-transformer": "^0.3.1",
     "class-validator": "^0.14.0",
     "cloudinary": "^1.19.0",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "mongoose": "^5.8.9",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.0",
